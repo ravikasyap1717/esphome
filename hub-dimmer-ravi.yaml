@@ -1,0 +1,80 @@
+esphome:
+  name: hub-dimmer-ravi
+  platform: ESP32
+  board: esp32dev
+  includes:
+    - led_strip_dimmer.h
+    
+  libraries:
+    - Wire
+    - DFRobot_GP8403
+    
+external_components:
+ - source:
+      type: local
+      path: /config/esphome/DFRobot_GP8403/
+
+# Enable logging
+logger:
+  level: DEBUG
+
+web_server:
+  port: 80
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "3df53537c856f829b8fc18d47d1620c0"
+
+wifi:
+  ssid: "Whatever"
+  password: "smlic12345"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Hub-Dimmer Fallback Hotspot"
+    password: "AKWjUQti6PLE"
+
+captive_portal:
+
+# Example configuration entry for ESP32
+i2c:
+  sda: 4
+  scl: 5
+  scan: true
+  #id: bus_a
+  
+  
+# Example configuration entry
+output:
+- platform: custom
+  type: float
+  lambda: |-
+    auto my_led_dimmer = new MyLedDimmerOutput();
+    App.register_component(my_led_dimmer);
+    return {my_led_dimmer};
+
+  outputs:
+    id: my_led_dimmer
+
+- platform: custom
+  type: float
+  lambda: |-
+    auto my_led_dimmer_2 = new MyLedDimmerOutput1();
+    App.register_component(my_led_dimmer_2);
+    return {my_led_dimmer_2};
+
+  outputs:
+    id:  my_led_dimmer_2
+    
+light:
+  - platform: monochromatic
+    name: "Dimmable Light 1"
+    output: my_led_dimmer
+    gamma_correct: 0
+
+  - platform: monochromatic
+    name: "Dimmable Light 2"
+    output: my_led_dimmer_2
+    gamma_correct: 0
