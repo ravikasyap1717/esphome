@@ -25,11 +25,12 @@ web_server:
 api:
 
 ota:
-  password: "3df53537c856f829b8fc18d47d1620c0"
+  #password: "3df53537c856f829b8fc18d47d1620c0"
+    password: ""
 
 wifi:
   ssid: "Whatever"
-  password: "smlic12345"
+  password: ""
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
